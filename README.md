@@ -1,6 +1,4 @@
 
----
-
 # 🫀 Heart Disease Predictor
 
 A lightweight end-to-end ML project to predict the likelihood of heart disease from clinical inputs.
@@ -174,7 +172,6 @@ See `LICENSE`. ([GitHub][1])
 ## 🔗 References
 
 [1]: https://github.com/Siddique-Aham/Heart-Disease-Predictor
-[2]: https://archive.ics.uci.edu/ml/datasets/heart+disease
 
----
+
 
