@@ -1,7 +1,11 @@
 
+---
+
 # 🫀 Heart Disease Predictor
 
-A lightweight end-to-end ML project to predict the likelihood of heart disease from clinical inputs. It includes a scikit-learn model, a Flask web app with an HTML form, and a simple `predict` utility for programmatic inference. Licensed under MIT. ([GitHub][1])
+A lightweight end-to-end ML project to predict the likelihood of heart disease from clinical inputs.
+It includes a **scikit-learn model**, a **Flask web app** with an HTML form, and a simple `predict` utility for programmatic inference.
+Licensed under **MIT**. ([GitHub][1])
 
 ---
 
@@ -55,8 +59,11 @@ SMART-HEALTH-PREDICTOR/
 ├── config.yaml
 ├── predict.py
 └── requirements.txt
+```
 
-## 📦 Tech Sta
+---
+
+## 📦 Tech Stack
 
 * **Python**, **Flask**, **scikit-learn**, **pandas**, **numpy**
 * **PyYAML/ruamel** (for `config.yaml`), **joblib** or **pickle** for artifacts
@@ -68,16 +75,21 @@ SMART-HEALTH-PREDICTOR/
 
 ## 📊 Data & Target
 
-Typical heart disease datasets (e.g., UCI Cleveland) include features like age, sex, chest pain type, resting blood pressure, cholesterol, fasting blood sugar, resting ECG, max heart rate, exercise-induced angina, oldpeak, slope, ca, thal, etc. The target is usually **binary** (disease vs no disease). For reference about the UCI dataset, see: ([UCI Machine Learning Repository][2])
+Typical heart disease datasets (e.g., **UCI Cleveland**) include features like:
+
+* age, sex, chest pain type, resting blood pressure, cholesterol, fasting blood sugar, resting ECG, max heart rate, exercise-induced angina, oldpeak, slope, ca, thal, etc.
+
+The **target** is usually **binary** (disease vs no disease).
+For reference: ([UCI Machine Learning Repository][2])
 
 > If you’re using a different CSV, update `config.yaml` feature order accordingly.
 
 ---
 
-## 🧠 Modeling (overview)
+## 🧠 Modeling (Overview)
 
 * **Preprocessing:** handle missing values, scale numerical columns (e.g., StandardScaler), encode categoricals (if present).
-* **Model:** a classic baseline like **Logistic Regression** or **Random Forest** (fast, interpretable, strong baseline for tabular health data).
+* **Model:** Logistic Regression or Random Forest (fast, interpretable, strong baseline for tabular health data).
 * **Artifacts:** save preprocessor + model to `models/` and load them in `app.py` / `predict.py`.
 
 > The exact algorithm can vary; the repo is structured to allow swapping models without changing the web code.
@@ -86,7 +98,7 @@ Typical heart disease datasets (e.g., UCI Cleveland) include features like age, 
 
 ## 🚀 Quickstart
 
-### 1) Clone & set up
+### 1) Clone & Set Up
 
 ```bash
 git clone https://github.com/Siddique-Aham/Heart-Disease-Predictor.git
@@ -101,16 +113,20 @@ source .venv/bin/activate
 
 # install deps
 pip install -r requirements.txt
+```
 
+---
 
-### 2) Configure (optional)
+### 2) Configure (Optional)
 
 Open `config.yaml` and confirm:
 
 * **feature\_order**: list in the exact order your model expects
 * **model\_path** and **preprocessor\_path**: artifact locations under `models/`
 
-### 3) Run the web app
+---
+
+### 3) Run the Web App
 
 ```bash
 python app.py
@@ -118,23 +134,25 @@ python app.py
 # flask --app app run
 ```
 
-Then open the printed local URL (usually `http://127.0.0.1:5000/`) and submit the form.
+Now open the printed local URL (usually `http://127.0.0.1:5000/`) and submit the form.
 
+---
 
-## 📈 Metrics & Validation (recommendations)
+## 📈 Metrics & Validation (Recommendations)
 
-* Report **Accuracy**, **Precision/Recall**, **F1**, **ROC-AUC**.
-* Use **StratifiedKFold** cross-validation.
-* Calibrate probabilities if needed (e.g., **CalibratedClassifierCV**).
-* Log a simple **confusion matrix** image in `models/` and embed it in the README.
+* Report **Accuracy**, **Precision/Recall**, **F1**, **ROC-AUC**
+* Use **StratifiedKFold** cross-validation
+* Calibrate probabilities if needed (e.g., **CalibratedClassifierCV**)
+* Log a simple **confusion matrix** image in `models/` and embed it in the README
 
-(Background on widely used datasets & approaches: UCI Heart Disease dataset description.) ([UCI Machine Learning Repository][2])
+Background dataset reference: ([UCI Machine Learning Repository][2])
 
 ---
 
 ## 🛡️ Responsible Use
 
-This tool is **for educational/assistance purposes**, not a medical device. Do not rely on it for diagnosis or treatment decisions. Always consult qualified healthcare professionals.
+This tool is **for educational/assistance purposes**, not a medical device.
+Do not rely on it for diagnosis or treatment decisions. Always consult qualified healthcare professionals.
 
 ---
 
@@ -148,9 +166,15 @@ This tool is **for educational/assistance purposes**, not a medical device. Do n
 
 ## 📄 License
 
-MIT © 2025 Siddique Aham. See `LICENSE`. ([GitHub][1])
+MIT © 2025 Siddique Aham.
+See `LICENSE`. ([GitHub][1])
 
+---
 
+## 🔗 References
 
+[1]: https://github.com/Siddique-Aham/Heart-Disease-Predictor
+[2]: https://archive.ics.uci.edu/ml/datasets/heart+disease
 
+---
 
