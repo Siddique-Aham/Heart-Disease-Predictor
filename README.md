@@ -57,8 +57,6 @@ SMART-HEALTH-PREDICTOR/
 └── requirements.txt
 
 
----
-
 ## 📦 Tech Stack
 
 * **Python**, **Flask**, **scikit-learn**, **pandas**, **numpy**
