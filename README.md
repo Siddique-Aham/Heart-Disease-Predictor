@@ -56,8 +56,7 @@ SMART-HEALTH-PREDICTOR/
 ├── predict.py
 └── requirements.txt
 
-
-## 📦 Tech Stack
+## 📦 Tech Sta
 
 * **Python**, **Flask**, **scikit-learn**, **pandas**, **numpy**
 * **PyYAML/ruamel** (for `config.yaml`), **joblib** or **pickle** for artifacts
@@ -150,8 +149,6 @@ This tool is **for educational/assistance purposes**, not a medical device. Do n
 ## 📄 License
 
 MIT © 2025 Siddique Aham. See `LICENSE`. ([GitHub][1])
-
----
 
 
 
