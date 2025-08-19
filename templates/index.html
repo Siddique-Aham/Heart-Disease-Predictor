@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Disease Predictor</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #f0f0f0;
+            background-color: #121212;
+            background-image: radial-gradient(circle at 25% 25%, #2a2a2a 0%, #121212 100%);
+        }
+        
+        h1 {
+            color: #4fc3f7;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(79, 195, 247, 0.5);
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            letter-spacing: 1px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #bb86fc;
+            font-size: 0.95em;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            background-color: #2d2d2d;
+            color: #ffffff;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #bb86fc, 
+                        0 0 10px rgba(187, 134, 252, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        input:hover, select:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        
+        button {
+            background: linear-gradient(135deg, #bb86fc 0%, #3700b3 100%);
+            color: white;
+            border: none;
+            padding: 14px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3),
+                        inset 0 1px 0 rgba(255,255,255,0.1);
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4),
+                        inset 0 1px 0 rgba(255,255,255,0.1);
+            background: linear-gradient(135deg, #bb86fc 0%, #6200ee 100%);
+        }
+        
+        button:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        #result {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            display: none;
+            transition: all 0.5s ease;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .risk-high {
+            background: linear-gradient(135deg, rgba(239, 83, 80, 0.2) 0%, rgba(198, 40, 40, 0.3) 100%);
+            border-left: 4px solid #ef5350;
+            animation: pulse 2s infinite;
+        }
+        
+        .risk-low {
+            background: linear-gradient(135deg, rgba(102, 187, 106, 0.2) 0%, rgba(56, 142, 60, 0.3) 100%);
+            border-left: 4px solid #66bb6a;
+        }
+        
+        .error {
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.2) 0%, rgba(245, 124, 0, 0.3) 100%);
+            border-left: 4px solid #ff9800;
+        }
+        
+        #result h2 {
+            color: #ffffff;
+            margin-top: 0;
+            text-shadow: 0 0 8px rgba(255,255,255,0.2);
+        }
+        
+        #result p {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        #result p strong {
+            font-size: 1.2em;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(239, 83, 80, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(239, 83, 80, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 83, 80, 0); }
+        }
+        
+        .card {
+            background: rgba(40, 40, 40, 0.7);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .glow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(187, 134, 252, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.9em;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="glow"></div>
+    <div class="card">
+        <h1>Heart Disease Risk Predictor</h1>
+        
+        <form id="predictionForm">
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="sex">Sex (1 = male; 0 = female):</label>
+                <input type="number" id="sex" name="sex" min="0" max="1" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="cp">Chest Pain Type (0-3):</label>
+                <input type="number" id="cp" name="cp" min="0" max="3" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="trestbps">Resting Blood Pressure (mm Hg):</label>
+                <input type="number" id="trestbps" name="trestbps" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="chol">Serum Cholesterol (mg/dl):</label>
+                <input type="number" id="chol" name="chol" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="fbs">Fasting Blood Sugar > 120 mg/dl (1 = true; 0 = false):</label>
+                <input type="number" id="fbs" name="fbs" min="0" max="1" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="restecg">Resting ECG Results (0-2):</label>
+                <input type="number" id="restecg" name="restecg" min="0" max="2" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="thalach">Maximum Heart Rate Achieved:</label>
+                <input type="number" id="thalach" name="thalach" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="exang">Exercise Induced Angina (1 = yes; 0 = no):</label>
+                <input type="number" id="exang" name="exang" min="0" max="1" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="oldpeak">ST Depression Induced by Exercise:</label>
+                <input type="number" id="oldpeak" name="oldpeak" step="0.1" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="slope">Slope of Peak Exercise ST Segment (0-2):</label>
+                <input type="number" id="slope" name="slope" min="0" max="2" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="ca">Number of Major Vessels (0-3) Colored by Fluoroscopy:</label>
+                <input type="number" id="ca" name="ca" min="0" max="3" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="thal">Thalassemia (3 = normal; 6 = fixed defect; 7 = reversible defect):</label>
+                <input type="number" id="thal" name="thal" min="0" max="7" required>
+            </div>
+            
+            <button type="submit">Predict Heart Disease Risk</button>
+        </form>
+        
+        <div id="result"></div>
+    </div>
+    
+    <script>
+        document.getElementById('predictionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading state
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'block';
+            resultDiv.className = '';
+            resultDiv.innerHTML = '<p>Processing your request...</p>';
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = {};
+            formData.forEach((value, key) => data[key] = value);
+            
+            // Send prediction request
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams(data).toString()
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const riskClass = data.prediction ? 'risk-high' : 'risk-low';
+                    const riskMessage = data.prediction 
+                        ? 'High risk of heart disease (' + data.probability + '%)'
+                        : 'Low risk of heart disease (' + data.probability + '%)';
+                    
+                    resultDiv.className = riskClass;
+                    resultDiv.innerHTML = `<h2>Result</h2>
+                                          <p><strong>${riskMessage}</strong></p>
+                                          <p>Probability: ${data.probability}%</p>`;
+                } else {
+                    resultDiv.className = 'error';
+                    resultDiv.innerHTML = `<p>Error: ${data.error}</p>`;
+                }
+            })
+            .catch(error => {
+                resultDiv.className = 'error';
+                resultDiv.innerHTML = `<p>Error: ${error.message}</p>`;
+            });
+        });
+    </script>
+</body>
+</html>

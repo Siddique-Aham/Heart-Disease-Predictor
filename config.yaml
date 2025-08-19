@@ -1,0 +1,10 @@
+paths:
+  data_raw: data/raw
+  data_processed: data/processed
+  models: models
+
+model_params:
+  diabetes:
+    target: Outcome
+  heart:
+    target: target
